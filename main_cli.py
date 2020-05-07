@@ -2,6 +2,7 @@ import urllib.request,urllib.parse,urllib.error
 import http,json
 # API URL
 serviceurl = 'https://codeforces.com/api/user.info?'
+NOT_EXISTING = 'Not Existing'
 while True:
     while True:
         handles = input('Enter the handle name: ')
@@ -34,28 +35,27 @@ while True:
         if 'country' in presentKeys:
             country =  js['result'][0]['country']
         else :
-            country = 'Not Existing'
+            country = NOT_EXISTING
         if 'city' in presentKeys:
             city = js['result'][0]['city']
         else :
-            city = 'Not Existing'
+            city = NOT_EXISTING
         if 'organisation' in presentKeys:
             org = js['result'][0]['organization']
         else :
-            org = 'Not Existing'
+            org = NOT_EXISTING
         if 'organization' in presentKeys:
             org = js['result'][0]['organization']
         else :
-            org = 'Not Existing'
+            org = NOT_EXISTING
         if 'rank' in presentKeys:
             rank = js['result'][0]['rank']
         else :
-            rank = 'Not Existing'
+            rank = NOT_EXISTING
         if 'rating' in presentKeys:
             currentRating = js['result'][0]['rating'] 
         else :
-            currentRating = 'Not Existing'
-        
+            currentRating = NOT_EXISTING
         len_name = len(Name) + len('  | Name            :')
         len_country = len(country) + len('  | Country         :')
         len_city = len(city) + len('  | City            :')
