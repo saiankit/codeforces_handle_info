@@ -8,13 +8,15 @@ class CodeForcesInfo:
         window.config(background = "white")
         window.title("CodeForces Info")  #Set title of GUI Window
         Label(window, text = "Enter the Handle").grid(row = 1, column = 1,sticky = W)
-        Label(window, text = "Rating").grid(row = 2, column = 1,sticky = W)
-        Label(window, text = "Rank").grid(row = 3, column = 1,sticky = W)
-        Label(window, text = "Country").grid(row = 4, column = 1,sticky = W)
-        Label(window, text = "City").grid(row = 5, column = 1,sticky = W)
-        Label(window, text = "Organisation").grid(row = 6, column = 1,sticky = W)
+        Label(window, text = "Name").grid(row = 2, column = 1,sticky = W)
+        Label(window, text = "Rating").grid(row = 3, column = 1,sticky = W)
+        Label(window, text = "Rank").grid(row = 4, column = 1,sticky = W)
+        Label(window, text = "Country").grid(row = 5, column = 1,sticky = W)
+        Label(window, text = "City").grid(row = 6, column = 1,sticky = W)
+        Label(window, text = "Organisation").grid(row = 7, column = 1,sticky = W)
         #Declaring the variables
         self.handleID = StringVar()
+        self.name = StringVar()
         self.rating = StringVar()
         self.rank = StringVar()
         self.country = StringVar()
@@ -24,14 +26,15 @@ class CodeForcesInfo:
         #Entry box for taking handle inputs
         Entry(window, textvariable = self.handleID, justify = LEFT).grid(row = 1,column = 2)
         #Instantiating the variables
-        handleRating = Label(window, textvariable = self.rating).grid(row = 2 , column = 2 , sticky = E)
-        handleRank = Label(window, textvariable = self.rank).grid(row = 3 , column = 2 , sticky = E) 
-        handleCountry = Label(window, textvariable = self.country).grid(row = 4 , column = 2 , sticky = E) 
-        handleCity = Label(window, textvariable = self.city).grid(row = 5 , column = 2 , sticky = E) 
-        handleOrganisation = Label(window, textvariable = self.organisation).grid(row = 6 , column = 2 , sticky = E)
-        handleExistence = Label(window, textvariable = self.existence).grid(row=7,column=1,sticky=E)
+        handleName = Label(window, textvariable = self.name).grid(row = 2 , column = 2 , sticky = E)
+        handleRating = Label(window, textvariable = self.rating).grid(row = 3 , column = 2 , sticky = E)
+        handleRank = Label(window, textvariable = self.rank).grid(row = 4 , column = 2 , sticky = E) 
+        handleCountry = Label(window, textvariable = self.country).grid(row = 5 , column = 2 , sticky = E) 
+        handleCity = Label(window, textvariable = self.city).grid(row = 6 , column = 2 , sticky = E) 
+        handleOrganisation = Label(window, textvariable = self.organisation).grid(row = 7 , column = 2 , sticky = E)
+        handleExistence = Label(window, textvariable = self.existence).grid(row = 8,column = 1,sticky = E)
         #Button Creation
-        btSubmit = Button(window, text = "Submit", command = self.showInfo).grid(row = 7 , column = 2, sticky = E)
+        btSubmit = Button(window, text = "Submit", command = self.showInfo).grid(row = 8 , column = 2, sticky = E)
         window.mainloop()#TheEventLoop
     def showInfo(self):
         serviceurl = 'https://codeforces.com/api/user.info?'
@@ -54,6 +57,14 @@ class CodeForcesInfo:
             print('==== Failure To Retrieve ====')
             print(data)
         presentKeys = js['result'][0]
+        if 'firstName' in js['result'][0] and 'lastName' in js['result'][0]:
+            self.name.set(js['result'][0]['firstName'] + ' ' +  js['result'][0]['lastName'])
+        elif 'lastName' in js['result'][0] == False:
+           self.name.set(js['result'][0]['firstName'])
+        elif 'firstName' in js['result'][0] == False: 
+            self.name.set(js['result'][0]['lastName'])
+        else:
+            self.name.set(NOT_EXISTING)
         if 'rating' in presentKeys:
             self.rating.set(js['result'][0]['rating'])
         else :
